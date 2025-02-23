@@ -1,19 +1,19 @@
-import { host } from "../script.js";
+import { host } from '../script.js'
 
 export async function deleteTodo(id) {
   try {
     const response = await fetch(`${host}/${id}`, {
-      method: "DELETE",
-    });
+      method: 'DELETE'
+    })
     if (!response.ok) {
-      throw new Error(`Не удалось удалить задачу. Статус: ${response.status}`);
+      throw new Error(`Не удалось удалить задачу. Статус: ${response.status}`)
     }
 
-    console.log("Задача удалена");
+    console.log('Задача удалена')
 
-    return true;
+    return true
   } catch (error) {
-    console.error(`Ошибка удаления:`, error.message);
-    throw error;
+    console.error(`Ошибка удаления:`, error.message)
+    throw error
   }
 }
