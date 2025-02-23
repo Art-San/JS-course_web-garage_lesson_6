@@ -106,6 +106,7 @@ function renderData(todos) {
       updateButton
     )
 
+    addDragAndDropListeners(todoElement, todo)
     container.append(todoElement)
     downloadButton.hidden = true
     hideLoader()
@@ -153,3 +154,31 @@ function showLoader() {
 function hideLoader() {
   overlay.style.display = 'none'
 }
+
+function addDragAndDropListeners(todoElement, todo) {
+  todoElement.draggable = 'true'
+  todoElement.addEventListener('dragstart', (event) => {
+    event.dataTransfer.setData('text/plain', todo.id)
+    event.currentTarget.classList.add('dragging')
+  })
+
+  todoElement.addEventListener('dragover', (event) => {
+    event.preventDefault()
+    const draggable = document.querySelector('.dragging')
+    const overElement = event.currentTarget
+
+    if (overElement !== draggable) {
+      const rect = overElement.getBoundingClientRect()
+
+      const offset = event.clientY - rect.top
+
+      if (offset < rect.height / 2) {
+        container.insertBefore(draggable, overElement)
+      } else {
+        container.insertBefore(draggable, overElement.nextSibling)
+      }
+    }
+  })
+}
+
+loadData()
