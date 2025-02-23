@@ -3,6 +3,7 @@ import { toggleTodoStatus } from './API/getStatusTodoApi.js'
 import { deleteTodo } from './API/deleteTodoApi.js'
 import { updateTodo } from './API/updateTodoApi.js'
 import { addTodo } from './API/addTodoApi.js'
+import { updateTasksOrderApi } from './API/updateTasksOrderApi.js'
 
 const container = document.getElementById('posts-container')
 const taskInput = document.getElementById('task-input')
@@ -11,7 +12,8 @@ const downloadButton = document.querySelector('.button-download')
 const overlay = document.getElementById('overlay')
 
 export const host = 'http://localhost:3001/todos'
-// export const host = 'https://677e662d94bde1c1252bc48a.mockapi.io/api/v1/todos'
+
+// export const host = 'https://67b41ad7392f4aa94fa956ee.mockapi.io/api/v1/todos'
 
 async function loadData() {
   try {
@@ -30,6 +32,7 @@ function renderData(todos) {
   todos.forEach((todo) => {
     const todoElement = document.createElement('div')
     todoElement.classList.add('todo')
+    todoElement.setAttribute('data-id', todo.id)
 
     const checkbox = document.createElement('input')
     checkbox.type = 'checkbox'
@@ -124,7 +127,8 @@ async function addNewTodo() {
   const newTodo = {
     text: newTodoText,
     createdAt: Date.now(),
-    completed: false
+    completed: false,
+    order: null
   }
 
   try {
@@ -179,6 +183,38 @@ function addDragAndDropListeners(todoElement, todo) {
       }
     }
   })
+
+  todoElement.addEventListener('dragend', (event) => {
+    event.currentTarget.classList.remove('dragging')
+    updateTaskOrder()
+  })
+}
+
+async function updateTaskOrder() {
+  const todos = [...container.querySelectorAll('.todo')]
+  // const todos = Array.from(container.querySelectorAll('.todo'))
+  const updatedOrder = todos.map((todo, index) => {
+    return {
+      id: todo.getAttribute('data-id'),
+      order: index + 1
+    }
+  })
+
+  try {
+    showLoader()
+
+    for (const task of updatedOrder) {
+      await updateTasksOrderApi(task.id, task.order)
+    }
+
+    console.log('Порядок задачи обновлен')
+
+    return true
+  } catch (error) {
+    console.error(error.message)
+  } finally {
+    hideLoader()
+  }
 }
 
 loadData()
