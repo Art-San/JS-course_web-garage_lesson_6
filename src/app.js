@@ -6,7 +6,6 @@ import {
 } from './API/index.js'
 
 export const container = document.getElementById('posts-container')
-const downloadButton = document.querySelector('.button-download')
 export const deleteCompletedButton = document.getElementById(
   'delete-completed-button'
 )
@@ -16,11 +15,15 @@ import {
   initDragAndDrop,
   initDeleteCompleted,
   initAddTodo,
-  updateTask
+  updateTask,
+  initDownload,
+  downloadButton,
+  initChangeStatus
 } from './components/index.js'
 
 initDeleteCompleted()
 initAddTodo()
+initDownload()
 export async function loadData() {
   try {
     showLoader()
@@ -38,7 +41,7 @@ export async function loadData() {
   }
 }
 
-function renderData(todos) {
+export function renderData(todos) {
   container.innerHTML = ''
 
   const hasComplitedTodos = todos.some((todo) => todo.completed)
@@ -54,15 +57,7 @@ function renderData(todos) {
     checkbox.type = 'checkbox'
     checkbox.checked = todo.completed
 
-    checkbox.addEventListener('change', async () => {
-      try {
-        await toggleTodoStatus(todo.id, checkbox.checked)
-        await loadData()
-      } catch (error) {
-        console.error(error.message)
-        showError('Не удалось изменить статус задачи')
-      }
-    })
+    initChangeStatus(todo, checkbox)
 
     const textElement = document.createElement('p')
     textElement.textContent = todo.text
