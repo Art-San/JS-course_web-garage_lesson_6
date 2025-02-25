@@ -1,6 +1,6 @@
-import { host } from '../script.js'
+import { host } from '../host.js'
 
-export async function updateTasksOrderApi(taskId, taskOrder) {
+export async function updateTaskOrderOnServer(taskId, taskOrder) {
   try {
     const response = await fetch(`${host}/${taskId}`, {
       // method: 'PUT', // для mockapi.io

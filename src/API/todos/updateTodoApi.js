@@ -1,6 +1,7 @@
-import { host } from '../script.js'
+import { host } from '../host.js'
 
 export async function updateTodo(id, newText) {
+  console.log(123, host)
   try {
     const response = await fetch(`${host}/${id}`, {
       // method: 'PUT', // для mockapi.io
