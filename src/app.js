@@ -15,7 +15,8 @@ import { hideLoader, showLoader, showError } from './utils/helpers.js'
 import {
   initDragAndDrop,
   initDeleteCompleted,
-  initAddTodo
+  initAddTodo,
+  updateTask
 } from './components/index.js'
 
 initDeleteCompleted()
@@ -106,32 +107,7 @@ function renderData(todos) {
 
     updateButton.append(updateIcon)
 
-    updateButton.addEventListener('click', async () => {
-      const { value: newText } = await Swal.fire({
-        title: 'Редактирование задачи',
-        input: 'text',
-        inputLabel: 'Введите текст новой задачи',
-        inputValue: todo.text,
-        showCancelButton: true,
-        confirmButtonText: 'Сохранить',
-        cancelButtonText: 'Отмена',
-        inputValidator: (value) => {
-          if (!value) {
-            return 'Поле не может быть пустым!'
-          }
-        }
-      })
-
-      if (newText) {
-        try {
-          await updateTodo(todo.id, newText)
-          await loadData()
-        } catch (error) {
-          console.error(error.message)
-          showError('Не удалось обновить задачу')
-        }
-      }
-    })
+    updateButton.addEventListener('click', () => updateTask(todo))
 
     todoElement.append(
       checkbox,
@@ -147,15 +123,5 @@ function renderData(todos) {
     hideLoader()
   })
 }
-
-// addButton.addEventListener('click', () => {
-//   addNewTodo(taskInput)
-// })
-
-// taskInput.addEventListener('keydown', (event) => {
-//   if (event.key === 'Enter') {
-//     addNewTodo(taskInput)
-//   }
-// })
 
 downloadButton.addEventListener('click', loadData)

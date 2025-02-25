@@ -7,6 +7,6 @@ export * from './inits/initAddTodo.js'
 
 export * from './ui/updateTasksOrder.js'
 export * from './ui/addNewTodo.js'
-// export * from './ui/updateTask.js'
+export * from './ui/updateTask.js'
 // export * from './ui/renderData.js'
 // export * from './ui/loadData.js'
