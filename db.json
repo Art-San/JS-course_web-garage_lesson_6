@@ -1,39 +1,11 @@
 {
   "todos": [
     {
-      "id": "3",
-      "text": "Конец",
-      "createdAt": 1740241380881,
-      "completed": false,
-      "order": 3
-    },
-    {
-      "id": "4",
-      "text": "Второй замок",
-      "createdAt": 1740295695847,
-      "completed": false,
-      "order": 1
-    },
-    {
       "id": "5",
-      "text": "Третий",
+      "text": "Третий час",
       "createdAt": 1740295695847,
       "completed": false,
       "order": 4
-    },
-    {
-      "id": "6",
-      "text": "Конец",
-      "createdAt": 1740241380881,
-      "completed": false,
-      "order": 3
-    },
-    {
-      "id": "7",
-      "text": "Второй",
-      "createdAt": 1740295695847,
-      "completed": false,
-      "order": 1
     },
     {
       "id": "9dd6",
@@ -45,13 +17,15 @@
       "id": "d955",
       "text": "bbb",
       "createdAt": 1740481292108,
-      "completed": false
+      "completed": false,
+      "order": 6
     },
     {
       "id": "916b",
       "text": "v   gggg",
       "createdAt": 1740481296884,
-      "completed": false
+      "completed": false,
+      "order": 7
     }
   ]
 }

@@ -11,7 +11,7 @@ export async function getTodos() {
     }
 
     const data = await response.json()
-    console.log(12, data)
+
     if (data.length === 0) {
       throw new Error('Задач нет')
     }
