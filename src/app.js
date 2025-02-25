@@ -2,13 +2,10 @@ import {
   getTodos,
   toggleTodoStatus,
   deleteTodo,
-  updateTodo,
-  addTodo
+  updateTodo
 } from './API/index.js'
 
 export const container = document.getElementById('posts-container')
-const taskInput = document.getElementById('task-input')
-const addButton = document.getElementById('add-button')
 const downloadButton = document.querySelector('.button-download')
 export const deleteCompletedButton = document.getElementById(
   'delete-completed-button'
@@ -18,11 +15,11 @@ import { hideLoader, showLoader, showError } from './utils/helpers.js'
 import {
   initDragAndDrop,
   initDeleteCompleted,
-  addNewTodo
+  initAddTodo
 } from './components/index.js'
 
 initDeleteCompleted()
-
+initAddTodo()
 export async function loadData() {
   try {
     showLoader()
@@ -151,123 +148,14 @@ function renderData(todos) {
   })
 }
 
-// async function addNewTodo() {
-//   const newTodoText = taskInput.value.trim()
+// addButton.addEventListener('click', () => {
+//   addNewTodo(taskInput)
+// })
 
-//   if (!newTodoText) {
-//     alert('Введите текст задачи!')
-//     return
-//   }
-
-//   const newTodo = {
-//     text: newTodoText,
-//     createdAt: Date.now(),
-//     completed: false,
-//     order: null
-//   }
-
-//   try {
-//     await addTodo(newTodo)
-//     console.log('Задача добавлена')
-//     taskInput.value = ''
-//     await loadData()
-//   } catch (error) {
-//     showError('Не удалось добавить задачу')
-//   }
-// }
-
-addButton.addEventListener('click', () => {
-  addNewTodo(taskInput)
-})
-
-taskInput.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
-    addNewTodo(taskInput)
-  }
-})
-
-downloadButton.addEventListener('click', loadData)
-
-// deleteCompletedButton.addEventListener('click', async () => {
-//   const { isConfirmed } = await Swal.fire({
-//     title: 'Вы уверены?',
-//     text: 'Все выполенные задачи будут удалены!',
-//     icon: 'warning',
-//     showCancelButton: true,
-//     confirmButtonColor: '#3085d6',
-//     cancelButtonColor: '#d33',
-//     confirmButtonText: 'Да, удалить!',
-//     cancelButtonText: 'Отменить'
-//   })
-
-//   if (!isConfirmed) return
-
-//   try {
-//     await deleteCompletedTodos(container)
-//     await loadData()
-//   } catch (error) {
-//     console.error(error.message)
-//     showError('Не удалось удалить список задач')
+// taskInput.addEventListener('keydown', (event) => {
+//   if (event.key === 'Enter') {
+//     addNewTodo(taskInput)
 //   }
 // })
 
-// function addDragAndDropListeners(todoElement, todo) {
-//   todoElement.draggable = 'true'
-//   todoElement.addEventListener('dragstart', (event) => {
-//     event.dataTransfer.setData('text/plain', todo.id)
-//     event.currentTarget.classList.add('dragging')
-//   })
-
-//   todoElement.addEventListener('dragover', (event) => {
-//     event.preventDefault()
-//     const draggable = document.querySelector('.dragging')
-//     const overElement = event.currentTarget
-
-//     if (overElement !== draggable) {
-//       const rect = overElement.getBoundingClientRect()
-
-//       const offset = event.clientY - rect.top
-
-//       if (offset < rect.height / 2) {
-//         container.insertBefore(draggable, overElement)
-//       } else {
-//         container.insertBefore(draggable, overElement.nextSibling)
-//       }
-//     }
-//   })
-
-//   todoElement.addEventListener('dragend', (event) => {
-//     event.currentTarget.classList.remove('dragging')
-//     updateTaskOrder()
-//   })
-// }
-
-// async function updateTaskOrder() {
-//   const todos = [...container.querySelectorAll('.todo')]
-//   // const todos = Array.from(container.querySelectorAll('.todo'))
-//   const updatedOrder = todos.map((todo, index) => {
-//     return {
-//       id: todo.getAttribute('data-id'),
-//       order: index + 1
-//     }
-//   })
-
-//   try {
-//     showLoader()
-
-//     for (const task of updatedOrder) {
-//       await updateTasksOrderApi(task.id, task.order)
-//     }
-
-//     console.log('Порядок задачи обновлен')
-
-//     return true
-//   } catch (error) {
-//     console.error(error.message)
-//     showError('Не удалось переместить элемент')
-//   } finally {
-//     hideLoader()
-//   }
-// }
-
-// loadData()
+downloadButton.addEventListener('click', loadData)
