@@ -1,6 +1,6 @@
 import { getTodos } from '../../API/index.js'
-// import { renderData } from '../index.js'
-import { renderData } from '../../app.js'
+import { renderData } from '../index.js'
+
 import { showError, showLoader, hideLoader } from '../../utils/helpers.js'
 
 export async function loadData() {
