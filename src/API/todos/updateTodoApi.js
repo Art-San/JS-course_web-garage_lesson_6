@@ -3,7 +3,7 @@ import { host } from '../host.js'
 export async function updateTodo(id, newText) {
   console.log(123, host)
   try {
-    const response = await fetch(`${host}/${id}`, {
+    const response = await fetch(`${host}/${id}.json`, {
       // method: 'PUT', // для mockapi.io
       method: 'PATCH',
       headers: {

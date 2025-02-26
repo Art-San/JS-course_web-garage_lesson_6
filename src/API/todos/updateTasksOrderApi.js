@@ -2,7 +2,7 @@ import { host } from '../host.js'
 
 export async function updateTaskOrderOnServer(taskId, taskOrder) {
   try {
-    const response = await fetch(`${host}/${taskId}`, {
+    const response = await fetch(`${host}/${taskId}.json`, {
       // method: 'PUT', // для mockapi.io
       method: 'PATCH',
       headers: {
