@@ -1,13 +1,8 @@
-import { initDeleteCompleted, initAddTodo } from './components/index.js'
+// import { initDeleteCompleted, initAddTodo } from './components/index.js'
 
-initDeleteCompleted()
-initAddTodo()
-// initDownload() // убрали кнопку получить задачи
+// initDeleteCompleted()
+// initAddTodo()
 
-const signupForm = document.getElementById('signup-form')
-const signinForm = document.getElementById('signin-form')
-const taskContainer = document.getElementById('task-container')
+import { initApp } from './init.js'
 
-signupForm.style.display = 'display'
-signinForm.style.display = 'none'
-taskContainer.style.display = 'none'
+initApp()

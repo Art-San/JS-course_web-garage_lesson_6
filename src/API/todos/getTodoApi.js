@@ -14,7 +14,7 @@ export async function getTodos(uid, token) {
     console.log('Данные получены:', data)
 
     if (!data) {
-      throw new Error('Задач нет')
+      return []
     }
 
     const todosArray = Object.keys(data).map((key) => ({
@@ -24,7 +24,6 @@ export async function getTodos(uid, token) {
 
     todosArray.sort((a, b) => a.order - b.order)
 
-    console.log(todosArray)
     return todosArray
   } catch (error) {
     console.error(`Ошибка получения данных:`, error.message)

@@ -1,7 +1,6 @@
 export * from './inits/initDragAndDrop.js'
 export * from './inits/initDeleteCompleted.js'
 export * from './inits/initAddTodo.js'
-// export * from './inits/initDownload.js'
 export * from './inits/initChangeStatus.js'
 export * from './inits/initDelete.js'
 
@@ -13,3 +12,6 @@ export * from './ui/loadData.js'
 
 export * from './auth/signUp.js'
 export * from './auth/signIn.js'
+export * from './auth/signOut.js'
+export * from './auth/googleAuth.js'
+export * from './auth/forgotPassword.js'

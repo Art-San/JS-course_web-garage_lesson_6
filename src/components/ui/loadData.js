@@ -1,24 +1,24 @@
 import { getTodos } from '../../API/index.js'
 import { renderData } from '../index.js'
-import { showError, showLoader, hideLoader } from '../../utils/helpers.js'
+import { showLoader, hideLoader } from '../../utils/helpers.js'
+import { showError, showInfo } from '../../utils/notification.js'
 import { getUserInfo } from '../../utils/authHelper.js'
 
 export async function loadData() {
   try {
     showLoader()
     const { uid, token } = await getUserInfo()
-    console.log(33, token)
-    console.log(34, token)
+
     const todos = await getTodos(uid, token)
 
-    renderData(todos)
-  } catch (error) {
-    console.error(error)
-    if (error.message === 'Задач нет') {
-      showError('Задач нет')
+    if (todos.length === 0) {
+      showInfo('У Вас пока нет задач')
     } else {
-      showError('Не удалось получить данные')
+      renderData(todos)
     }
+  } catch (error) {
+    console.error(error.message)
+    showError('Не удалось получить данные')
   } finally {
     hideLoader()
   }
