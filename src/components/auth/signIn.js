@@ -60,13 +60,23 @@ signinForm.addEventListener('submit', async (event) => {
     showTasksBlock()
     loadData()
   } catch (error) {
-    console.error('Ошибка авторизации: ', error.message, error.code)
-    alert(`Ошибка авторизации: ${error.message}`)
+    switch (error.code) {
+      case 'auth/too-many-requests':
+        showWarning('Слишком много попыток входа. Пожалуйста, попробуйте позже')
+        break
+      case 'auth/invalid-credential':
+        showWarning('Неверные учетные данные. Проверьте email и пароль')
+        break
+
+      default:
+        showWarning('Ошибка авторизации:', error.message, error.code)
+        break
+    }
   }
 })
 
 export function showTasksBlock() {
-  taskContainer.style.display = 'flex'
+  taskContainer.style.display = 'block'
 }
 
 export function hideSigninForm() {
