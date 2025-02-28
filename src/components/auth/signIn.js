@@ -4,11 +4,7 @@ import {
   sendEmailVerification
 } from '../../firebaseConfig.js'
 import { loadData } from '../index.js'
-import {
-  showConfirmation,
-  showWarning,
-  showSuccess
-} from '../../utils/notification.js'
+import { showConfirmation, showWarning } from '../../utils/notification.js'
 import { signWithGoogle } from './googleAuth.js'
 
 const googleButton = document.getElementById('google-signin-button')
@@ -19,6 +15,7 @@ const forgotPasswordButton = document.getElementById('forgot-password-button')
 forgotPasswordButton.addEventListener('click', showForgotPasswordForm)
 
 const signinForm = document.getElementById('signin-form')
+
 const taskContainer = document.getElementById('task-container')
 
 signinForm.addEventListener('submit', async (event) => {
@@ -37,8 +34,6 @@ signinForm.addEventListener('submit', async (event) => {
 
     const user = userCredential.user
 
-    console.log('Пользователь авторизован', user.uid)
-
     if (!user.emailVerified) {
       showWarning(
         'Ваш email не верифицирован. Пожалуйста, проверьте Вашу почту'
@@ -55,18 +50,27 @@ signinForm.addEventListener('submit', async (event) => {
       }
       return
     }
-
     hideSigninForm()
     showTasksBlock()
     loadData()
   } catch (error) {
-    console.error('Ошибка авторизации: ', error.message, error.code)
-    alert(`Ошибка авторизации: ${error.message}`)
+    switch (error.code) {
+      case 'auth/too-many-requests':
+        showWarning('Слишком много попыток входа. Пожалуйста, попробуйте позже')
+        break
+      case 'auth/invalid-credential':
+        showWarning('Неверные учетные данные. Проверьте email и пароль')
+        break
+
+      default:
+        showWarning('Ошибка авторизации:', error.message, error.code)
+        break
+    }
   }
 })
 
 export function showTasksBlock() {
-  taskContainer.style.display = 'flex'
+  taskContainer.style.display = 'block'
 }
 
 export function hideSigninForm() {

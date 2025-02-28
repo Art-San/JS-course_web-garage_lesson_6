@@ -46,13 +46,25 @@ signupForm.addEventListener('submit', async (event) => {
     hideSignupForm()
     showSigninForm()
   } catch (error) {
-    if (error.code === 'auth/email-already-in-use') {
-      showWarning(
-        'Это email уже зарегистрирован. Пожалуйста, войдите в систему'
-      )
+    switch (error.code) {
+      case 'auth/email-already-exists':
+      case 'auth/email-already-in-use':
+        showWarning(
+          'Этот email уже зарегистрирован. Пожалуйста, войдите в систему'
+        )
+        break
+      case 'auth/invalid-email':
+        showWarning(
+          'Неверный формат email. Пожалуйста, проверьте введенные данные'
+        )
+        break
+      case 'auth/weak-password':
+        showWarning('Пароль должен быть не менее 6 символов')
+        break
+      default:
+        showWarning('Произошла неизвестная ошибка: ', error.message, error.code)
+        break
     }
-    console.error('Ошибка регистрации: ', error.message, error.code)
-    //showError(`Ошибка регистрации`);
   }
 })
 
